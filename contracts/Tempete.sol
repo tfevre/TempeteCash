@@ -15,7 +15,7 @@ contract Tempete {
     function deposit() public payable {
         // value should be > 0
         require(msg.value > 0);
-
+        // To be replaced with chainlink oracle
         string memory message = Strings.toString(uint(keccak256("wow")));
         addressArray[msg.sender] = message;
         valueArray[message] = msg.value;
@@ -26,7 +26,7 @@ contract Tempete {
     }
 
     function withdraw(string memory _message, address _to, uint256 _amount) public payable{
-        require(valueArray[_message] > 0, "The message does not exist");
+        require(valueArray[_message] > 0, "There is no ETH to withdraw from this message");
         
         payable(_to).transfer(_amount);
         valueArray[_message] -= _amount;
